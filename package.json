@@ -7,6 +7,10 @@
   "engines": {
     "vscode": "^1.93.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sifat2245/typesnap-extension"
+  },
   "categories": [
     "Other",
     "Programming Languages"
@@ -15,8 +19,7 @@
   "activationEvents": [
     "onStartupFinished",
     "onLanguage:typescript",
-    "onLanguage:typescriptreact",
-    "*"
+    "onLanguage:typescriptreact"
   ],
   "main": "./out/extension.js",
   "contributes": {
