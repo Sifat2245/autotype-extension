@@ -4,10 +4,6 @@
 
 Paste JSON → get beautifully structured, extracted TypeScript code — automatically.
 
-## Extension Name & Description
-
-**Name:** TypeSnap  
-**Description:**  
 Paste JSON right after `type:` or `interface:` → TypeSnap automatically replaces it with clean, extracted TypeScript types or interfaces using `json-to-ts`. Supports custom names, optional fields, arrays, and nested objects.
 
 ## Features
