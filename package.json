@@ -3,7 +3,7 @@
   "displayName": "TypeSnap",
   "publisher": "sifat",
   "description": "Convert JSON to TypeScript types/interfaces automatically",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -11,6 +11,7 @@
     "Other",
     "Programming Languages"
   ],
+  "icon": "logo.ico",
   "activationEvents": [
     "onStartupFinished",
     "onLanguage:typescript",
@@ -51,6 +52,7 @@
     "eslint": "^9.0.0",
     "json-to-ts": "^2.1.0",
     "typescript": "^5.5.0",
-    "typescript-eslint": "^8.0.0"
+    "typescript-eslint": "^8.0.0",
+    "@vscode/vsce": "^2.26.1"
   }
 }
