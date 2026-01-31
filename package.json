@@ -2,22 +2,29 @@
   "name": "typesnap",
   "displayName": "TypeSnap",
   "publisher": "sifat",
-  "description": "Convert JSON to TypeScript types/interfaces automatically",
+  "description": "Convert pasted JSON to clean TypeScript types/interfaces automatically",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.93.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Sifat2245/typesnap-extension"
-  },
   "categories": [
-    "Other",
-    "Programming Languages"
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "json",
+    "typescript",
+    "types",
+    "interfaces",
+    "api",
+    "paste"
   ],
   "icon": "logo.ico",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sifat2245/typesnap-extension.git"
+  },
   "activationEvents": [
-    "onStartupFinished",
     "onLanguage:typescript",
     "onLanguage:typescriptreact"
   ],
@@ -42,20 +49,23 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "package": "vsce package",
+    "publish": "vsce publish",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "npm run compile && vscode-test"
+  },
+  "dependencies": {
+    "json-to-ts": "^2.1.0"
   },
   "devDependencies": {
+    "@types/vscode": "^1.93.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "@types/vscode": "^1.93.0",
+    "typescript": "^5.5.0",
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.0",
-    "eslint": "^9.0.0",
-    "json-to-ts": "^2.1.0",
-    "typescript": "^5.5.0",
-    "typescript-eslint": "^8.0.0",
     "@vscode/vsce": "^2.26.1"
   }
 }
