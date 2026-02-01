@@ -19,7 +19,7 @@
     "api",
     "paste"
   ],
-  "icon": "logo.ico",
+  "icon": "logo.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/Sifat2245/typesnap-extension.git"
