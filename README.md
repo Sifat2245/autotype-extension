@@ -1,10 +1,10 @@
-# TypeSnap
+# AutoType
 
 **Convert JSON to clean TypeScript types/interfaces instantly**
 
 Paste JSON → get beautifully structured, extracted TypeScript code — automatically.
 
-Paste JSON right after `type:` or `interface:` → TypeSnap automatically replaces it with clean, extracted TypeScript types or interfaces. Supports custom names, optional fields, arrays, and nested objects.
+Paste JSON right after `type:` or `interface:` → AutoType automatically replaces it with clean, extracted TypeScript types or interfaces. Supports custom names, optional fields, arrays, and nested objects.
 
 ## Features
 
@@ -14,7 +14,6 @@ Paste JSON right after `type:` or `interface:` → TypeSnap automatically replac
 - Nested objects extracted into separate named interfaces/types
 - Proper handling of arrays, null/undefined → optional fields
 - Clean spacing & consistent formatting
-- Undo support (`Ctrl+Z` / `Cmd+Z`)
 - Works only in `.ts` and `.tsx` files
 
 ## How to Trigger It
@@ -23,7 +22,7 @@ Paste JSON right after `type:` or `interface:` → TypeSnap automatically replac
 2. On an empty line write one of the following:
 3. Press `Enter`
 4. Paste your JSON object or array immediately below the trigger line
-5. Wait ~0.3–0.8 seconds → TypeSnap replaces the trigger line + JSON with clean TypeScript code
+5. Wait ~0.3–0.8 seconds → AutoType replaces the trigger line + JSON with clean TypeScript code
 
 ## Requirements
 
@@ -98,7 +97,7 @@ type ProductDto:
 }
 ```
 
-You will get the output
+### You will get the output
 
 ```typescript
 export type ProductDto = {

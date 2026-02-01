@@ -1,9 +1,9 @@
 {
-  "name": "typesnap",
-  "displayName": "TypeSnap",
+  "name": "autotype",
+  "displayName": "AutoTYpe",
   "publisher": "sifat",
   "description": "Convert pasted JSON to clean TypeScript types/interfaces automatically",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -32,13 +32,13 @@
   "contributes": {
     "commands": [
       {
-        "command": "typesnap.convert",
-        "title": "TypeSnap: Convert JSON to TS"
+        "command": "autotype.convert",
+        "title": "AutoType: Convert JSON to TS"
       }
     ],
     "keybindings": [
       {
-        "command": "typesnap.convert",
+        "command": "autotype.convert",
         "key": "ctrl+alt+t",
         "mac": "cmd+alt+t",
         "when": "editorTextFocus && editorLangId =~ /^(typescript|typescriptreact)$/"

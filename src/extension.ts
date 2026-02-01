@@ -2,6 +2,7 @@ import JsonToTS from "json-to-ts";
 import * as vscode from "vscode";
 
 export const activate = (context: vscode.ExtensionContext) => {
+  console.log("[AutoType] Extension activated successfully in published mode");
   let isApplyingEdit = false;
 
   const disposable = vscode.workspace.onDidChangeTextDocument((event) => {
@@ -29,7 +30,7 @@ export const activate = (context: vscode.ExtensionContext) => {
 
   //register a command for manual testing
   context.subscriptions.push(
-    vscode.commands.registerTextEditorCommand("typesnap.convert", (editor) => {
+    vscode.commands.registerTextEditorCommand("autotype.convert", (editor) => {
       tryConvertAfterTrigger(editor, isApplyingEdit);
     }),
   );
@@ -124,16 +125,17 @@ const tryConvertAfterTrigger = (
         isApplyingEdit = false;
         if (success) {
           vscode.window.setStatusBarMessage(
-            `TypeSnap: Converted to ${triggerType} ${rootName} (Ctrl+Z to undo)`,
+            `AutoType: Converted to ${triggerType} ${rootName} (Ctrl+Z to undo)`,
             8000,
           );
         } else {
-          vscode.window.showErrorMessage("TypeSnap: Could not apply edit");
+          vscode.window.showErrorMessage("AutoType: Could not apply edit");
         }
       });
   } catch (err) {
+    console.error("[AutoType] Conversion error:", err);
     vscode.window.showWarningMessage(
-      "TypeSnap: Invalid JSON – skipping conversion",
+      "AutoType: Invalid JSON – skipping conversion",
     );
   }
 };
