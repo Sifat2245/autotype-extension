@@ -1,9 +1,9 @@
 {
   "name": "autotype",
-  "displayName": "AutoTYpe",
-  "publisher": "sifat",
-  "description": "Convert pasted JSON to clean TypeScript types/interfaces automatically",
-  "version": "1.0.1",
+  "displayName": "AutoType",
+  "publisher": "SaifuddinAhmed",
+  "description": "Generate TypeScript types and interfaces from JSON, JavaScript objects, initial state, and dummy data",
+  "version": "1.1.0",
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -17,7 +17,10 @@
     "types",
     "interfaces",
     "api",
-    "paste"
+    "paste",
+    "javascript",
+    "initial-state",
+    "mock-data"
   ],
   "icon": "logo.png",
   "repository": {
@@ -26,14 +29,29 @@
   },
   "activationEvents": [
     "onLanguage:typescript",
-    "onLanguage:typescriptreact"
+    "onLanguage:typescriptreact",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:json",
+    "onLanguage:jsonc"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "autotype.convert",
-        "title": "AutoType: Convert JSON to TS"
+        "title": "AutoType: Convert JSON / Object to TypeScript",
+        "enablement": "editorLangId =~ /^(typescript|typescriptreact|javascript|javascriptreact|json|jsonc)$/"
+      },
+      {
+        "command": "autotype.generateType",
+        "title": "AutoType: Generate Type (Keep Original)",
+        "enablement": "editorLangId =~ /^(typescript|typescriptreact|javascript|javascriptreact|json|jsonc)$/"
+      },
+      {
+        "command": "autotype.generateTypesFile",
+        "title": "AutoType: Generate Types File",
+        "enablement": "editorLangId =~ /^(typescript|typescriptreact|javascript|javascriptreact|json|jsonc)$/"
       }
     ],
     "keybindings": [
@@ -41,31 +59,128 @@
         "command": "autotype.convert",
         "key": "ctrl+alt+t",
         "mac": "cmd+alt+t",
-        "when": "editorTextFocus && editorLangId =~ /^(typescript|typescriptreact)$/"
+        "when": "editorTextFocus && editorLangId =~ /^(typescript|typescriptreact|javascript|javascriptreact|json|jsonc)$/"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "autotype.generateType",
+          "when": "editorLangId =~ /^(typescript|typescriptreact|javascript|javascriptreact|json|jsonc)$/",
+          "group": "autotype@1"
+        },
+        {
+          "command": "autotype.generateTypesFile",
+          "when": "editorLangId =~ /^(typescript|typescriptreact|javascript|javascriptreact|json|jsonc)$/",
+          "group": "autotype@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AutoType",
+      "properties": {
+        "autotype.defaultStyle": {
+          "type": "string",
+          "enum": [
+            "interface",
+            "type"
+          ],
+          "default": "interface",
+          "description": "Declaration style for commands. Explicit type: and interface: triggers take precedence."
+        },
+        "autotype.exportTypes": {
+          "type": "boolean",
+          "default": true,
+          "description": "Export generated declarations. Required for automatic imports from a types file."
+        },
+        "autotype.readonly": {
+          "type": "boolean",
+          "default": false,
+          "description": "Generate readonly properties and ReadonlyArray element types. Explicit type overrides are kept as written."
+        },
+        "autotype.indentStyle": {
+          "type": "string",
+          "enum": [
+            "spaces",
+            "tabs"
+          ],
+          "default": "spaces",
+          "description": "Indentation used in generated declarations."
+        },
+        "autotype.indentSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8,
+          "default": 2,
+          "description": "Spaces per indentation level when indentStyle is spaces."
+        },
+        "autotype.namePrefix": {
+          "type": "string",
+          "default": "",
+          "description": "Prefix for inferred root and nested type names, for example I."
+        },
+        "autotype.nameSuffix": {
+          "type": "string",
+          "default": "",
+          "description": "Suffix for inferred root and nested type names, for example Dto."
+        },
+        "autotype.emptyArrayType": {
+          "type": "string",
+          "default": "unknown",
+          "description": "Fallback ELEMENT type for arrays with no sample elements. For example unknown produces unknown[]."
+        },
+        "autotype.nullType": {
+          "type": "string",
+          "default": "null",
+          "description": "Type inferred from null values. Use typeOverrides for per-property choices such as User | null."
+        },
+        "autotype.typeOverrides": {
+          "type": "object",
+          "default": {},
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Full property types keyed by dot paths, for example {\"users\": \"User[]\", \"selectedUser\": \"User | null\", \"users[].id\": \"string\"}. Paths are relative to the root object or root array sample."
+        },
+        "autotype.outputLocation": {
+          "type": "string",
+          "enum": [
+            "currentFile",
+            "newFile"
+          ],
+          "default": "currentFile",
+          "description": "Default command destination. JavaScript and JSON always use a separate TypeScript file. Paste triggers always replace the trigger and pasted data."
+        },
+        "autotype.addImport": {
+          "type": "boolean",
+          "default": false,
+          "description": "Add a type-only import to a saved .ts/.tsx source when creating a types file. Requires exportTypes."
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
+    "dev": "npm run compile && node scripts/run-local.cjs",
     "package": "vsce package",
     "publish": "vsce publish",
     "lint": "eslint src --ext ts",
-    "test": "npm run compile && vscode-test"
+    "test": "npm run compile && node --test test/*.test.cjs",
+    "test:host": "npm run compile && node scripts/test-host.cjs"
   },
   "dependencies": {
-    "json-to-ts": "^2.1.0"
+    "typescript": "^5.5.0"
   },
   "devDependencies": {
-    "@types/vscode": "^1.93.0",
     "@types/mocha": "^10.0.10",
-    "@types/node": "22.x",
-    "typescript": "^5.5.0",
-    "eslint": "^9.0.0",
-    "typescript-eslint": "^8.0.0",
+    "@types/node": "^22.20.5",
+    "@types/vscode": "^1.93.0",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.0",
-    "@vscode/vsce": "^2.26.1"
+    "@vscode/vsce": "^2.26.1",
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^8.0.0"
   }
 }
