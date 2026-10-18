@@ -3,7 +3,7 @@
   "displayName": "AutoType",
   "publisher": "SaifuddinAhmed",
   "description": "Generate TypeScript types and interfaces from JSON, JavaScript objects, initial state, and dummy data",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -163,7 +163,7 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "dev": "npm run compile && node scripts/run-local.cjs",
+    "dev": "node api.js && npm run compile && node scripts/run-local.cjs",
     "package": "vsce package",
     "publish": "vsce publish",
     "lint": "eslint src --ext ts",

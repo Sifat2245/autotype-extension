@@ -2,7 +2,7 @@
 
 All notable changes to AutoType are documented here.
 
-## [1.1.0] - 2026-10-17
+## [1.2.0] - 2026-10-17
 
 - Isolate local development from installed extensions to prevent duplicate AutoType commands from blocking activation.
 - Match the publisher identity of the installed extension from this repository so the local copy replaces it during development.
